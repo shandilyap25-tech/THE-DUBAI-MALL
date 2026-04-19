@@ -30,6 +30,9 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+        
+      - name: Rebuild native modules
+        run: npm rebuild
 
       - name: Build application
         run: npm run build
@@ -84,8 +87,10 @@ jobs:
           node-version: '18'
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Clean install and rebuild
+        run: |
+          npm ci
+          npm rebuild
 
       - name: Type check
         run: npm run type-check 2>/dev/null || echo "Type checking not configured"
