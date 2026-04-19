@@ -1,0 +1,49 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Raleway:wght@200;300;400;500;600&display=swap');
+
+@theme {
+  --font-sans: "Raleway", sans-serif;
+  --font-display: "Cormorant Garamond", serif;
+  
+  --color-luxury-gold: #C9A84C;
+  --color-luxury-gold-light: #E8C96B;
+  --color-luxury-gold-dark: #9B7E3A;
+  --color-luxury-black: #0a0a0a;
+  --color-luxury-dark: #111111;
+  --color-luxury-dark2: #1a1a1a;
+  --color-luxury-cream: #F9F5EE;
+  --color-luxury-muted: rgba(249, 245, 238, 0.6);
+}
+
+:root {
+  background-color: var(--color-luxury-black);
+  color: var(--color-luxury-cream);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(201, 168, 76, 0.4) transparent;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background-color: var(--color-luxury-gold);
+  color: var(--color-luxury-black);
+}
+
+.cinematic-shadow {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+@utility bg-radial-vignette {
+  background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.75) 100%);
+}
+
+.glass-morphism {
+  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(201, 168, 76, 0.2);
+}

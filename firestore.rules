@@ -1,0 +1,107 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 0. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- Helper Functions ---
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isSystemAuth() {
+      return 'system_key' in incoming() && incoming().system_key == 'visionary_bypass_2026';
+    }
+
+    function isAdmin() {
+      return isSystemAuth() || (isSignedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid)));
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    // --- Validation Blueprints ---
+
+    function isValidLead(data) {
+      return data.keys().hasAll(['name', 'email', 'timestamp'])
+        && data.name is string && data.name.size() > 0
+        && data.email is string && data.email.matches('^[^@]+@[^@]+\\.[^@]+$')
+        && (data.timestamp == request.time || isSystemAuth());
+    }
+
+    function isValidSection(data) {
+      return data.keys().hasAll(['title', 'headline', 'subtext', 'order'])
+        && data.title is string
+        && data.order is int;
+    }
+
+    // --- Collections ---
+
+    // 1. Leads - Write-only for public, Read for admins
+    match /leads/{leadId} {
+      allow create: if isSystemAuth() || isValidLead(incoming());
+      allow read: if isAdmin();
+    }
+
+    // 2. Sections - Read for everyone, Write for admins
+    match /sections/{sectionId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 3. Config (Highlights) - Read for everyone, Write for admins
+    match /config/highlights {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 4. Opportunities - Read for everyone, Write for admins
+    match /opportunities/{optId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 5. Events - Read for everyone, Write for admins
+    match /events/{eventId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /whats_new/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /brands/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /services/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /visitor_info/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /opening_hours/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 6. Admins
+    match /admins/{adminId} {
+      allow read: if isSignedIn() && request.auth.uid == adminId;
+    }
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "entities": {
+    "Lead": {
+      "title": "Business Lead",
+      "description": "A high-impact business inquiry representing potential investment.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "company_name": { "type": "string" },
+        "interest_type": { "type": "string", "enum": ["leasing", "sponsorship", "event"] },
+        "business_category": { "type": "string", "enum": ["luxury", "retail", "F&B", "entertainment"] },
+        "message": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "email", "interest_type", "business_category", "timestamp"]
+    },
+    "Section": {
+      "title": "Storytelling Section",
+      "description": "A dynamic video-first section of the interactive sales deck.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "headline": { "type": "string" },
+        "subtext": { "type": "string" },
+        "media": {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "enum": ["video", "image"] },
+            "source": { "type": "string", "enum": ["youtube", "upload"] },
+            "url": { "type": "string" },
+            "autoplay": { "type": "boolean" },
+            "loop": { "type": "boolean" },
+            "muted": { "type": "boolean" },
+            "start_time": { "type": "integer" }
+          }
+        },
+        "layout_type": { "type": "string", "enum": ["fullscreen", "split", "grid"] },
+        "order": { "type": "integer" }
+      },
+      "required": ["title", "headline", "subtext", "order"]
+    },
+    "Highlights": {
+      "title": "Market Highlights",
+      "description": "Key stats designed to convince brands and investors.",
+      "type": "object",
+      "properties": {
+        "visitors": { "type": "string" },
+        "stores": { "type": "string" },
+        "area": { "type": "string" },
+        "attractions": { "type": "string" }
+      },
+      "required": ["visitors", "stores", "area", "attractions"]
+    },
+    "Opportunity": {
+      "title": "Business Opportunity",
+      "description": "Segmented pitch content for different interest types.",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["leasing", "sponsorship", "events"] },
+        "headline": { "type": "string" },
+        "benefits": { "type": "array", "items": { "type": "string" } },
+        "audience": { "type": "string" },
+        "media_url": { "type": "string" }
+      },
+      "required": ["type", "headline", "benefits", "audience"]
+    },
+    "Event": {
+      "title": "Mall Event/Activation",
+      "description": "Record of past events or space capabilities.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "type": { "type": "string", "enum": ["past", "capability"] },
+        "highlights": { "type": "string" },
+        "venue": { "type": "string" },
+        "date": { "type": "string", "format": "date" }
+      },
+      "required": ["title", "type", "venue"]
+    }
+  },
+  "firestore": {
+    "/leads/{leadId}": { "schema": "Lead", "description": "Captured business leads." },
+    "/sections/{sectionId}": { "schema": "Section", "description": "Dynamic storytelling content." },
+    "/config/highlights": { "schema": "Highlights", "description": "High-level destination stats." },
+    "/opportunities/{optId}": { "schema": "Opportunity", "description": "Segmented business pitches." },
+    "/events/{eventId}": { "schema": "Event", "description": "Event history and capabilities." }
+  }
+}
