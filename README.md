@@ -8,10 +8,12 @@ A modern, AI-powered web application for The Dubai Mall featuring interactive ex
 
 ## 🔗 Quick Links
 
-- **Live Site:** https://mall.netlify.app
+- **Live Site (Netlify):** https://mall.netlify.app
+- **Live Site (Vercel):** Deploy and get your link
 - **AI Studio:** https://ai.studio/apps/50dc9c17-3421-4c2c-a14b-7f7a3680f3a0
 - **GitHub Repository:** https://github.com/yourusername/The-Dubai-Mall
-- **Documentation:** See [Project Structure](#project-structure) below
+- **Netlify Guide:** See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)
+- **Vercel Guide:** See [VERCEL_DEPLOYMENT_GUIDE.md](VERCEL_DEPLOYMENT_GUIDE.md)
 
 ## Table of Contents
 
